@@ -9,6 +9,8 @@ process LEFSE_RUN {
 
     output:
     path("*.pdf")  , emit: pdf
+    path("*.png")  , emit: png
+    path("*.svg")  , emit: svg
 
     script:
     """
@@ -16,9 +18,15 @@ process LEFSE_RUN {
 
     lefse_run.py lefse_ready_table.in lefse_ready_table.res
 
-    lefse_plot_res.py lefse_ready_table.res lefse_res_bar.pdf --format pdf --dpi 300
+    for i in {png,pdf,svg}
 
-    lefse_plot_cladogram.py lefse_ready_table.res lefse_res_clado.pdf --format pdf --dpi 300
+    do
+
+    lefse_plot_res.py lefse_ready_table.res lefse_res_bar.$i --format $i --dpi 300
+
+    lefse_plot_cladogram.py lefse_ready_table.res lefse_res_clado.$i --format $i --dpi 300
+
+    done
 
     """
 }
