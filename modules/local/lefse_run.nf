@@ -18,13 +18,15 @@ process LEFSE_RUN {
 
     lefse_run.py lefse_ready_table.in lefse_ready_table.res
 
-    for i in {png,pdf,svg}
+    array=("png" "svg" "pdf")
+
+    for i in \${array[@]}
 
     do
 
-    lefse_plot_res.py lefse_ready_table.res lefse_res_bar.$i --format $i --dpi 300
+    lefse_plot_res.py lefse_ready_table.res lefse_res_bar.\$i --format \$i --dpi 300
 
-    lefse_plot_cladogram.py lefse_ready_table.res lefse_res_clado.$i --format $i --dpi 300
+    lefse_plot_cladogram.py lefse_ready_table.res lefse_res_clado.\$i --format \$i --dpi 300
 
     done
 
